@@ -1,0 +1,18 @@
+{
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.formatOnType": true,
+  "files.exclude": {
+    "www/": true
+  },
+  "editor.formatOnSave": false,
+  "[typescript]": {
+    "editor.formatOnSave": true
+  },
+  "[vue]": {
+    "editor.formatOnSave": true
+  },
+  "[scss]": {
+      "editor.formatOnSave": true
+  }
+}
