@@ -1,5 +1,5 @@
 {
-  "watch": ["server", "routes"],
+  "watch": ["server", "pages", "components"],
   "ext": "ts",
-  "exec": "ts-node ./server/index.ts"
+  "exec": "ts-node --compiler-options '{\"module\": \"commonjs\"}' ./server/index.ts"
 }

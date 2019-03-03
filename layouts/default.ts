@@ -2,10 +2,10 @@ import { Component, Vue } from 'vue-property-decorator'
 
 @Component({})
 export default class Default extends Vue {
-  clipped: boolean = false
-  drawer: boolean = false
-  fixed: boolean = false
-  items: Object[] = [
+  public clipped: boolean = false
+  public drawer: boolean = false
+  public fixed: boolean = false
+  public items: object[] = [
     {
       icon: 'apps',
       title: 'Welcome',
@@ -17,8 +17,8 @@ export default class Default extends Vue {
       to: '/inspire'
     }
   ]
-  miniVariant: boolean = false
-  right: boolean = true
-  rightDrawer: boolean = false
-  title: string = 'Vuetify.js'
+  public miniVariant: boolean = false
+  public right: boolean = true
+  public rightDrawer: boolean = false
+  public title: string = 'Vuetify.js'
 }

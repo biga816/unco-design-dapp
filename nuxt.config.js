@@ -74,7 +74,7 @@ module.exports = {
       if (ctx.isDev && ctx.isClient) {
         config.module.rules.push({
           enforce: 'pre',
-          test: /\.(ts|vue)$/,
+          test: /\.(ts)$/,
           loader: 'tslint-loader',
           exclude: /(node_modules)/
         })
