@@ -43,7 +43,7 @@ module.exports = {
   */
   plugins: [
     '@/plugins/vuetify',
-    { src: '@/plugins/swiper.js', ssr: false }
+    { mode: 'client', src: '@/plugins/swiper.js' }
   ],
 
   /*

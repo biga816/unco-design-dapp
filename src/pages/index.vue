@@ -21,19 +21,21 @@
           </div>
         </div>
 
-        <div class="swiper-slide">
-          <div class="about slide-container">
-            <h1>What is Unco?</h1>
-            <img class="stamp" alt="Unco stamp" src="../assets/img/stamp@4x.png">
-            <p class="description">
-              Unco, which mean the solid or semisolid remains of the food
-              that could not be digested in the small intestine,
-              are called feces (or poo) in english.
-              <br>Unco in Japanese is called with various names such as Unko and Unchi.
-              <br>We redesign the Unco and send it to the world as a new concept.
-            </p>
+        <no-ssr>
+          <div class="swiper-slide">
+            <div class="about slide-container">
+              <h1>What is Unco?</h1>
+              <img class="stamp" alt="Unco stamp" src="../assets/img/stamp@4x.png">
+              <p class="description">
+                Unco, which mean the solid or semisolid remains of the food
+                that could not be digested in the small intestine,
+                are called feces (or poo) in english.
+                <br>Unco in Japanese is called with various names such as Unko and Unchi.
+                <br>We redesign the Unco and send it to the world as a new concept.
+              </p>
+            </div>
           </div>
-        </div>
+        </no-ssr>
       </div>
 
       <!-- <div class="swiper-pagination"></div> -->

@@ -1,25 +1,15 @@
 import { Component, Vue } from 'vue-property-decorator'
-// import PtsCanvas from '@/components/PtsCanvas/PtsCanvas.vue'
-
-// libs
-// import { swiper, swiperSlide } from 'vue-awesome-swiper/dist/ssr'
+import PtsCanvas from '@/components/PtsCanvas/PtsCanvas.vue'
 
 @Component({
   components: {
-    PtsCanvas: () => import('@/components/PtsCanvas/PtsCanvas.vue')
-    // swiper,
-    // swiperSlide
+    PtsCanvas
   }
 })
 export default class Index extends Vue {
   public swiperOption: any = {
     // direction: 'vertical',
-    effect: 'flip',
-    grabCursor: false,
-    pagination: {
-      // el: '.swiper-pagination',
-      // clickable: true,
-    }
+    effect: 'flip'
   }
   public activeIndex: number = 0
 

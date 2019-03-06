@@ -1,7 +1,11 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 // libs
-import { CanvasSpace, Group, Pt, Create } from 'pts'
+// import { CanvasSpace, Group, Pt, Create } from 'pts'
+let CanvasSpace: any
+let Group: any
+let Pt: any
+let Create: any
 
 @Component
 export default class PtsCanvas extends Vue {
@@ -9,12 +13,30 @@ export default class PtsCanvas extends Vue {
   private type!: string
 
   /**
+   * Creates an instance of PtsCanvas.
+   * @memberof PtsCanvas
+   */
+  constructor() {
+    super()
+    let pts
+
+    // ssr
+    if (process.browser) {
+      pts = require('pts')
+      CanvasSpace = pts.CanvasSpace
+      Group = pts.Group
+      Pt = pts.Pt
+      Create = pts.Create
+    }
+  }
+
+  /**
    *
    *
    * @memberof PtsCanvas
    */
   public mounted(): void {
-    if (typeof window === 'undefined') {
+    if (!process.browser) {
       return
     }
 
@@ -33,10 +55,10 @@ export default class PtsCanvas extends Vue {
    *
    *
    * @private
-   * @param {CanvasSpace} space
+   * @param {any} space
    * @memberof PtsCanvas
    */
-  private showLine(space: CanvasSpace) {
+  private showLine(space: any) {
     const form = space.getForm()
 
     const chain = new Group()
@@ -54,7 +76,7 @@ export default class PtsCanvas extends Vue {
         form.fillOnly('#123').point(space.pointer, 10, 'circle')
       },
 
-      action: (type, px, py) => {
+      action: (type: any, px: any, py: any) => {
         // stretch the line when mouse is down
         if (type === 'down') {
           stretch = true
