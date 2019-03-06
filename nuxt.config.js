@@ -34,10 +34,10 @@ module.exports = {
   ** Global CSS
   */
   css: [
-    '~/assets/style/app.styl',
-    'swiper/dist/css/swiper.css'
+    '~/assets/style/app.scss',
+    'vuetify/src/stylus/app.styl',
+    'swiper/dist/css/swiper.css',
   ],
-
   /*
   ** Plugins to load before mounting the App
   */
@@ -70,7 +70,7 @@ module.exports = {
     // watch: ['server'],
     loaders: {
       stylus: {
-        import: ['~assets/style/variables.styl']
+        import: ['~vuetify/src/stylus/settings/_variables.styl']
       }
     },
     vendor: ['vue-awesome-swiper/dist/ssr']
