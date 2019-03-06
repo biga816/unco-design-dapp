@@ -3,6 +3,7 @@ const pkg = require('./package')
 
 module.exports = {
   mode: 'universal',
+  srcDir: 'src/',
 
   /*
   ** Headers of the page
@@ -32,12 +33,18 @@ module.exports = {
   /*
   ** Global CSS
   */
-  css: ['~/assets/style/app.styl'],
+  css: [
+    '~/assets/style/app.styl',
+    'swiper/dist/css/swiper.css'
+  ],
 
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['@/plugins/vuetify'],
+  plugins: [
+    '@/plugins/vuetify',
+    { src: '@/plugins/swiper.js', ssr: false }
+  ],
 
   /*
   ** Nuxt.js modules
@@ -60,25 +67,27 @@ module.exports = {
   build: {
     transpile: ['vuetify/lib'],
     plugins: [new VuetifyLoaderPlugin()],
+    // watch: ['server'],
     loaders: {
       stylus: {
         import: ['~assets/style/variables.styl']
       }
     },
+    vendor: ['vue-awesome-swiper/dist/ssr']
 
     /*
     ** You can extend webpack config here
     */
-    extend(config, ctx) {
-      // Run ESLint on save
-      if (ctx.isDev && ctx.isClient) {
-        config.module.rules.push({
-          enforce: 'pre',
-          test: /\.(ts)$/,
-          loader: 'tslint-loader',
-          exclude: /(node_modules)/
-        })
-      }
-    }
+    // extend(config, ctx) {
+    //   // Run ESLint on save
+    //   if (ctx.isDev && ctx.isClient) {
+    //     config.module.rules.push({
+    //       enforce: 'pre',
+    //       test: /\.(ts)$/,
+    //       loader: 'tslint-loader',
+    //       exclude: /(node_modules)/
+    //     })
+    //   }
+    // }
   }
 }

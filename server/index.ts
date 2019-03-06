@@ -9,7 +9,6 @@ const targetConfig = {
   ...config,
   dev: !(process.env.NODE_ENV === 'production')
 }
-targetConfig.dev = !(process.env.NODE_ENV === 'production')
 
 async function start() {
   // Init Nuxt.js

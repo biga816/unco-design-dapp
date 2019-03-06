@@ -1,4 +1,4 @@
-declare module 'nuxt'
+declare module '*'
 
 declare module '*.vue' {
   import Vue from 'vue'

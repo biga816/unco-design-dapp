@@ -20,5 +20,4 @@ export default class Default extends Vue {
   public miniVariant: boolean = false
   public right: boolean = true
   public rightDrawer: boolean = false
-  public title: string = 'Vuetify.js'
 }
