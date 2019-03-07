@@ -30,15 +30,15 @@
   width: 100%;
 }
 
-.slide-button {
+.slide-buttons {
   position: absolute;
   bottom: 16px;
-  width: 72px;
-  height: 72px;
   left: 0;
   right: 0;
   margin: auto;
   z-index: 1;
+  max-width: 520px;
+  text-align: center;
 
   .reverse {
     transform: rotate(180deg);
@@ -82,13 +82,13 @@
   max-width: 520px;
   margin: auto;
   padding: 0 16px;
-}
 
-.description {
-  text-align: left;
-}
+  .description {
+    text-align: left;
+  }
 
-.stamp {
-  width: 160px;
-  margin: 16px;
+  .stamp {
+    width: 160px;
+    margin: 16px;
+  }
 }

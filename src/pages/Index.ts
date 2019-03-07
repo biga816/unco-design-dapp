@@ -1,9 +1,11 @@
 import { Component, Vue } from 'vue-property-decorator'
 import PtsCanvas from '@/components/PtsCanvas/PtsCanvas.vue'
+import NewUncoDialog from '@/components/NewUncoDialog/NewUncoDialog.vue'
 
 @Component({
   components: {
-    PtsCanvas
+    PtsCanvas,
+    NewUncoDialog
   }
 })
 export default class Index extends Vue {
@@ -12,6 +14,7 @@ export default class Index extends Vue {
     effect: 'flip'
   }
   public activeIndex: number = 0
+  // public dialog: boolean = false
 
   /**
    *
@@ -36,9 +39,19 @@ export default class Index extends Vue {
    *
    * @memberof Index
    */
-  public slideTo() {
+  public slideTo(): void {
     const mySwiper: any = this.$refs.mySwiper
     const index = 1 - mySwiper.swiper.activeIndex
     mySwiper.swiper.slideTo(index)
+  }
+
+  /**
+   *
+   *
+   * @param {*} event
+   * @memberof Index
+   */
+  public save(event: any): void {
+    // save action
   }
 }

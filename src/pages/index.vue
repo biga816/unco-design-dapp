@@ -7,7 +7,7 @@
           <div class="slide-container">
             <img class="logo" alt="Unco logo" src="../assets/img/logo@4x.png">
             <div class="message">
-              <h2>To the world designed unco...</h2>
+              <h2>Record the Unco designed in the world...</h2>
               <p class="authers">
                 produced by
                 <a
@@ -41,14 +41,25 @@
       <!-- <div class="swiper-pagination"></div> -->
     </div>
 
-    <v-btn
-      class="slide-button"
-      v-on:click="slideTo()"
-      v-bind:class="{reverse: activeIndex !== 0}"
-      fab
-    >
-      <v-icon>expand_more</v-icon>
-    </v-btn>
+    <div class="slide-buttons">
+      <!-- <v-btn outline color="black" fab>
+        <v-icon>add</v-icon>
+      </v-btn>-->
+      <!-- dialog -->
+      <NewUncoDialog v-on:onSave="save($event)"></NewUncoDialog>
+      <v-btn outline color="black" fab>
+        <v-icon>list</v-icon>
+      </v-btn>
+      <v-btn
+        outline
+        color="black"
+        v-on:click="slideTo()"
+        v-bind:class="{reverse: activeIndex !== 0}"
+        fab
+      >
+        <v-icon>chevron_right</v-icon>
+      </v-btn>
+    </div>
 
     <no-ssr>
       <PtsCanvas class="pts" type="line"/>
