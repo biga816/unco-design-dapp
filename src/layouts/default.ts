@@ -7,14 +7,14 @@ export default class Default extends Vue {
   public fixed: boolean = false
   public items: object[] = [
     {
-      icon: 'apps',
-      title: 'Welcome',
+      icon: 'home',
+      title: 'Home',
       to: '/'
     },
     {
-      icon: 'bubble_chart',
-      title: 'Inspire',
-      to: '/inspire'
+      icon: 'list',
+      title: 'History',
+      to: '/history'
     }
   ]
   public miniVariant: boolean = false

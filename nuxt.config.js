@@ -1,5 +1,6 @@
 const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
 const pkg = require('./package')
+require('dotenv').config()
 
 module.exports = {
   mode: 'universal',
@@ -43,7 +44,9 @@ module.exports = {
   */
   plugins: [
     '@/plugins/vuetify',
-    { mode: 'client', src: '@/plugins/swiper.js' }
+    { mode: 'client', src: '@/plugins/swiper.js' },
+    { src: '@/plugins/localStorage.js', ssr: false },
+    { src: '@/plugins/logger.js', ssr: false }
   ],
 
   /*
@@ -67,27 +70,34 @@ module.exports = {
   build: {
     transpile: ['vuetify/lib'],
     plugins: [new VuetifyLoaderPlugin()],
-    // watch: ['server'],
     loaders: {
       stylus: {
         import: ['~vuetify/src/stylus/settings/_variables.styl']
       }
     },
-    vendor: ['vue-awesome-swiper/dist/ssr']
+    vendor: ['vue-awesome-swiper/dist/ssr'],
+    watch: [
+      'src/services',
+      'src/interfaces',
+      'src/utils'
+    ],
 
     /*
     ** You can extend webpack config here
     */
-    // extend(config, ctx) {
-    //   // Run ESLint on save
-    //   if (ctx.isDev && ctx.isClient) {
-    //     config.module.rules.push({
-    //       enforce: 'pre',
-    //       test: /\.(ts)$/,
-    //       loader: 'tslint-loader',
-    //       exclude: /(node_modules)/
-    //     })
-    //   }
-    // }
+    extend(config, ctx) {
+      // Run ESLint on save
+      if (ctx.isDev && ctx.isClient) {
+        config.module.rules.push({
+          enforce: 'pre',
+          test: /\.(ts)$/,
+          loader: 'tslint-loader',
+          exclude: /(node_modules)/
+        })
+      }
+      if (ctx.isDev) {
+        config.devtool = '#source-map'
+      }
+    }
   }
 }

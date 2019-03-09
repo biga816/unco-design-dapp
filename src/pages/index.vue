@@ -7,7 +7,7 @@
           <div class="slide-container">
             <img class="logo" alt="Unco logo" src="../assets/img/logo@4x.png">
             <div class="message">
-              <h2>Record the Unco designed in the world...</h2>
+              <h2>Record the Unco in the world...</h2>
               <p class="authers">
                 produced by
                 <a
@@ -32,6 +32,8 @@
                 are called feces (or poo) in english.
                 <br>Unco in Japanese is called with various names such as Unko and Unchi.
                 <br>We redesign the Unco and send it to the world as a new concept.
+                <br>
+                {{$store.state.app.counter}}
               </p>
             </div>
           </div>
@@ -47,7 +49,7 @@
       </v-btn>-->
       <!-- dialog -->
       <NewUncoDialog v-on:onSave="save($event)"></NewUncoDialog>
-      <v-btn outline color="black" fab>
+      <v-btn outline color="black" fab to="/history">
         <v-icon>list</v-icon>
       </v-btn>
       <v-btn

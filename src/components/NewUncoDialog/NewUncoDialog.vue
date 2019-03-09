@@ -5,7 +5,7 @@
       <!-- <slot v-on="on"></slot> -->
       <!-- <v-btn color="primary" dark v-on="on">Open Dialog</v-btn> -->
       <v-btn outline color="black" fab v-on="on">
-        <v-icon>add</v-icon>
+        <v-icon>create</v-icon>
       </v-btn>
     </template>
     <v-card>

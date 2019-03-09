@@ -9,6 +9,15 @@
     "experimentalDecorators": true,
     "allowJs": true,
     "outDir": "./dist",
-    "noEmit": false
+    "noEmit": false,
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "config": [
+        "configs/environment.dev.ts",
+        "configs/environment.prod.ts"
+      ]
+    },
   }
 }
