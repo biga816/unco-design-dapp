@@ -44,7 +44,7 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>-->
-    <v-footer class="pa-3" :fixed="fixed" app>
+    <v-footer class="pa-3" :fixed="fixed">
       <v-spacer></v-spacer>
       <div>&copy; 2019 Akihiro Tanaka</div>
     </v-footer>
@@ -52,3 +52,4 @@
 </template>
 
 <script lang="ts" src="./default.ts"></script>
+<style lang="scss" src="./default.scss"></style>

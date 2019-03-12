@@ -1,20 +1,25 @@
 // libs
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import { format, getTime } from 'date-fns'
+
+// interfaces
+import { IIpfsFile } from '../../interfaces'
 
 @Component
 export default class NewUncoDialog extends Vue {
-  public dialog: boolean = false
+  @Prop()
+  public btnColor!: string
 
+  public dialog: boolean = false
   public date: string = format(new Date(), 'YYYY-MM-DD')
   public time: string = format(new Date(), 'HH:mm')
   public dateDialog: boolean = false
   public timeDialog: boolean = false
-  public sound: number = 2
+  public volume: number = 2
   public sharpness: number = 2
   public smell: number = 2
 
-  public soundLabels: string[] = ['Quiet', '', 'Normal', '', 'Loud']
+  public volumeLabels: string[] = ['Small', '', 'Normal', '', 'Large']
   public sharpnessLabels: string[] = ['Dull', '', 'Normal', '', 'Sharp']
   public smellLabels: string[] = ['Stink', '', 'Normal', '', 'Elegant']
 
@@ -23,14 +28,36 @@ export default class NewUncoDialog extends Vue {
    *
    * @memberof NewUncoDialog
    */
-  public onSave(): void {
-    const params = {
+  public save(): void {
+    // set id & parentHash
+    const currentIpfsData = this.$store.state.app.currentIpfsData
+    let id = 0
+    let parentHash = ''
+    if (currentIpfsData) {
+      id = currentIpfsData.data.id + 1
+      parentHash = currentIpfsData.hash
+    }
+
+    // set data
+    const data = {
+      id,
       timestamp: getTime(`${this.date} ${this.time}`) / 1000,
-      sound: this.sound,
+      volume: this.volume,
       sharpness: this.sharpness,
       smell: this.smell
     }
-    this.$emit('onSave', params)
+
+    // set targetFiles
+    const targetFiles: IIpfsFile[] = []
+
+    targetFiles[0] = {
+      path: 'data',
+      data: JSON.stringify(data)
+    }
+
+    targetFiles[1] = { path: 'parentHash', data: parentHash }
+
+    this.$store.dispatch('app/addFilesToIpfs', { files: targetFiles })
     this.dialog = false
   }
 }

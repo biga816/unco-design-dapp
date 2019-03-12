@@ -44,11 +44,7 @@
     </div>
 
     <div class="slide-buttons">
-      <!-- <v-btn outline color="black" fab>
-        <v-icon>add</v-icon>
-      </v-btn>-->
-      <!-- dialog -->
-      <NewUncoDialog v-on:onSave="save($event)"></NewUncoDialog>
+      <NewUncoDialog btnColor="black"></NewUncoDialog>
       <v-btn outline color="black" fab to="/history">
         <v-icon>list</v-icon>
       </v-btn>

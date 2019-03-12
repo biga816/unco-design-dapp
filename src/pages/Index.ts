@@ -1,9 +1,8 @@
 import { Component, Vue } from 'vue-property-decorator'
+
+// components
 import PtsCanvas from '@/components/PtsCanvas/PtsCanvas.vue'
 import NewUncoDialog from '@/components/NewUncoDialog/NewUncoDialog.vue'
-
-// interfaces
-import { IIpfsFile } from '../interfaces'
 
 @Component({
   transition: 'bounce',
@@ -13,14 +12,9 @@ import { IIpfsFile } from '../interfaces'
   }
 })
 export default class Index extends Vue {
-  public swiperOption: any = {
-    // direction: 'vertical',
-    effect: 'flip'
-  }
+  public swiperOption: any = { effect: 'flip' }
   public activeIndex: number = 0
-  // public dialog: boolean = false
-  public ipfsHash: string | null = null
-  public ipfsDataList: IIpfsFile[] = []
+  public ipfsHash: string = ''
 
   private unwatchs: [() => void] = [() => null]
 
@@ -30,6 +24,7 @@ export default class Index extends Vue {
    * @memberof Index
    */
   public mounted(): void {
+    // swiper setting
     const mySwiper: any = this.$refs.mySwiper
 
     mySwiper.swiper.on(
@@ -37,6 +32,7 @@ export default class Index extends Vue {
       () => (this.activeIndex = mySwiper.swiper.activeIndex)
     )
 
+    // watch
     this.unwatchs.push(
       // watch actions
       this.$store.subscribeAction({
@@ -67,37 +63,5 @@ export default class Index extends Vue {
     const mySwiper: any = this.$refs.mySwiper
     const index = 1 - mySwiper.swiper.activeIndex
     mySwiper.swiper.slideTo(index)
-  }
-
-  /**
-   *
-   *
-   * @param {*} event
-   * @memberof Index
-   */
-  public save(event: any): void {
-    // save action
-    // this.$store.commit('app/increment')
-
-    const targetFiles: IIpfsFile[] = []
-    let id: number = 0
-    // if (!this.uploadFile) { return; }
-    if (this.ipfsDataList && this.ipfsDataList.length > 0) {
-      id = this.ipfsDataList[0].data.id + 1
-    }
-
-    const data = { id, ...event }
-
-    targetFiles[0] = {
-      path: 'data',
-      data: JSON.stringify(data)
-    }
-
-    if (this.ipfsHash) {
-      targetFiles[1] = { path: 'parentHash', data: this.ipfsHash }
-    }
-
-    this.$store.dispatch('app/addFilesToIpfs', { files: targetFiles })
-    // this.$store.commit('app/increment')
   }
 }

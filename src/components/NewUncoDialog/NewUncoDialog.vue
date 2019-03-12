@@ -4,7 +4,7 @@
     <template v-slot:activator="{ on }">
       <!-- <slot v-on="on"></slot> -->
       <!-- <v-btn color="primary" dark v-on="on">Open Dialog</v-btn> -->
-      <v-btn outline color="black" fab v-on="on">
+      <v-btn outline :color="btnColor" fab v-on="on">
         <v-icon>create</v-icon>
       </v-btn>
     </template>
@@ -68,12 +68,12 @@
               </v-dialog>
             </v-flex>
 
-            <!-- Sound -->
+            <!-- Volume -->
             <v-flex xs12>
               <v-slider
-                label="Sound"
-                v-model="sound"
-                :tick-labels="soundLabels"
+                label="Volume"
+                v-model="volume"
+                :tick-labels="volumeLabels"
                 :max="4"
                 thumb-label="always"
                 step="1"
@@ -118,7 +118,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue darken-1" flat @click="dialog = false">Close</v-btn>
-        <v-btn color="blue darken-1" flat @click="onSave()">Save</v-btn>
+        <v-btn color="blue darken-1" flat @click="save()">Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

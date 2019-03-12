@@ -77,6 +77,7 @@ module.exports = {
     },
     vendor: ['vue-awesome-swiper/dist/ssr'],
     watch: [
+      'src/filters',
       'src/services',
       'src/interfaces',
       'src/utils'

@@ -1,5 +1,5 @@
 // interfaces
-import { IIpfsFile } from '../interfaces'
+import { IIpfsFile, IIpfsData } from '../interfaces'
 
 // utils
 import { IPFS } from '../utils/const'
@@ -28,11 +28,11 @@ export class IpfsService {
   /**
    *
    *
-   * @param {IFile[]} files
-   * @returns
+   * @param {IIpfsFile[]} files
+   * @returns {Promise<IIpfsData>}
    * @memberof IpfsService
    */
-  public async addFile(files: IIpfsFile[]): Promise<any> {
+  public async addFile(files: IIpfsFile[]): Promise<IIpfsData> {
     try {
       // set files for ipfs
       const inputFiles: any = [{ path: '/tmp' }]
@@ -50,8 +50,13 @@ export class IpfsService {
         throw new Error('ipfs upload error.')
       }
       const rootData = results[results.length - 1]
+      const ipfsData: IIpfsData = {
+        hash: rootData.hash,
+        data: JSON.parse(files[0].data),
+        parentHash: files[1].data
+      }
 
-      return rootData
+      return ipfsData
     } catch (error) {
       throw error
     }
@@ -80,12 +85,11 @@ export class IpfsService {
    *
    *
    * @param {string} hash
-   * @returns {Promise<any>}
+   * @returns {Promise<IIpfsData>}
    * @memberof IpfsService
    */
-  public async getIpfsData(hash: string): Promise<any> {
+  public async getIpfsData(hash: string): Promise<IIpfsData> {
     try {
-      // const url = environment.endpoints.ipfs.refUrl + hash + '/data';
       const domain = `${IPFS.PROTOCOL}://${IPFS.HOST}:${IPFS.PORT.GATEWAY}`
       const url = `${domain}/ipfs/${hash}`
       const results = await forkJoin([
@@ -93,7 +97,8 @@ export class IpfsService {
         axios.get(url + '/parentHash')
       ]).toPromise()
 
-      const ipfsData = {
+      const ipfsData: IIpfsData = {
+        hash,
         data: results[0].data,
         parentHash: results[1].data
       }

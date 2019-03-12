@@ -1,4 +1,5 @@
 import { IpfsService } from '../services/ipfs.service'
+import { IIpfsData } from '../interfaces'
 
 const ipfsService = new IpfsService()
 
@@ -8,7 +9,7 @@ const ipfsService = new IpfsService()
 export interface IState {
   counter: number
   accounts: string[]
-  ipfsHash: any
+  currentIpfsData: IIpfsData | {}
 }
 
 /**
@@ -17,7 +18,7 @@ export interface IState {
 export const state = (): IState => ({
   counter: 0,
   accounts: [],
-  ipfsHash: null
+  currentIpfsData: {}
 })
 
 /**
@@ -25,8 +26,8 @@ export const state = (): IState => ({
  */
 export const actions = {
   async addFilesToIpfs({ commit }: any, { files }: any) {
-    const ipfsFile = await ipfsService.addFile(files)
-    commit('addIpfsHash', { ipfsHash: ipfsFile.hash })
+    const ipfsData = await ipfsService.addFile(files)
+    commit('addIpfsData', { ipfsData })
   }
 }
 
@@ -34,13 +35,10 @@ export const actions = {
  * Mutations
  */
 export const mutations = {
-  increment(lstate: IState) {
-    lstate.counter++
-  },
   addAccounts(lstate: IState, { accounts }: any) {
     lstate.accounts = accounts
   },
-  addIpfsHash(lstate: IState, { ipfsHash }: any) {
-    lstate.ipfsHash = ipfsHash
+  addIpfsData(lstate: IState, { ipfsData }: any) {
+    lstate.currentIpfsData = ipfsData
   }
 }

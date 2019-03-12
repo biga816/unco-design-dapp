@@ -1,0 +1,75 @@
+.swiper {
+  position: absolute;
+  width: 300px;
+  height: 420px;
+  z-index: 1;
+  overflow: visible;
+
+  margin: auto;
+  top: 0;
+  bottom: 60px;
+  left: 0;
+  right: 0;
+  max-width: 520px;
+  max-height: 580px;
+}
+
+.swiper-slide {
+  p,
+  span {
+    word-break: break-all;
+  }
+
+  > {
+    padding: 16px;
+  }
+}
+
+.card-container {
+  color: #000;
+  // height: 100%;
+  // width: 300px;
+  // height: 420px;
+  // background-color: #ffee33;
+  background-color: #ffee33;
+
+  &.akebono {
+    background-color: #f19072;
+  }
+
+  &.Benikakesora {
+    background-color: #8491c3;
+  }
+}
+
+.chart {
+  // background: url(/_nuxt/src/assets/img/unco.png);
+  background: url(../../assets/img/unco.png);
+  object-fit: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin: 16px 16px 0px;
+  padding: 32px 8px 0px;
+}
+
+.ipfs-hash {
+  font-size: 10px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.slide-buttons {
+  position: absolute;
+  bottom: 16px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 1;
+  max-width: 520px;
+  text-align: center;
+
+  .reverse {
+    transform: rotate(180deg);
+  }
+}
