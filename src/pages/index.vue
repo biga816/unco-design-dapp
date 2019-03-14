@@ -30,10 +30,8 @@
                 Unco, which mean the solid or semisolid remains of the food
                 that could not be digested in the small intestine,
                 are called feces (or poo) in english.
-                <br>Unco in Japanese is called with various names such as Unko and Unchi.
-                <br>We redesign the Unco and send it to the world as a new concept.
-                <br>
-                {{$store.state.app.counter}}
+                <br>You can record the status of Unco in a distributed network (IPFS) for free,
+                and you can also tokenize it as an NFT (ERC721).
               </p>
             </div>
           </div>
@@ -60,6 +58,7 @@
     </div>
 
     <no-ssr>
+      <!-- <PtsCanvas v-if="animated" class="pts" type="line"/> -->
       <PtsCanvas class="pts" type="line"/>
     </no-ssr>
   </div>

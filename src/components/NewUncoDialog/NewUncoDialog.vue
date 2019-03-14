@@ -12,7 +12,7 @@
       <v-card-title primary-title>
         <div>
           <div class="headline">Record Today`s Unco</div>
-          <span>Let's record the state of Unco today in a distributed network (IPFS). You do not need to pay fees except in the case of registering as NFT (ERC721).</span>
+          <span>Let's record the state of Unco today in a distributed network (IPFS) for free.</span>
         </div>
       </v-card-title>
       <v-card-text>

@@ -10,7 +10,7 @@ import { unixtimeToDate } from '../../filters'
 import { IIpfsData } from '../../interfaces'
 
 @Component({
-  transition: 'bounce',
+  // transition: 'bounce',
   filters: {
     unixtimeToDate
   },

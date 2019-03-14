@@ -5,7 +5,7 @@ import PtsCanvas from '@/components/PtsCanvas/PtsCanvas.vue'
 import NewUncoDialog from '@/components/NewUncoDialog/NewUncoDialog.vue'
 
 @Component({
-  transition: 'bounce',
+  // transition: 'bounce',
   components: {
     PtsCanvas,
     NewUncoDialog
@@ -15,6 +15,7 @@ export default class Index extends Vue {
   public swiperOption: any = { effect: 'flip' }
   public activeIndex: number = 0
   public ipfsHash: string = ''
+  public animated: boolean = false
 
   private unwatchs: [() => void] = [() => null]
 
@@ -43,6 +44,11 @@ export default class Index extends Vue {
         }
       })
     )
+
+    // wait animation
+    // setTimeout(() => {
+    //   this.animated = true
+    // }, 1000)
   }
 
   /**
