@@ -2,29 +2,40 @@
   <div>
     <div class="swiper" v-swiper:mySwiper="swiperOption" ref="mySwiper">
       <div class="swiper-wrapper">
-        <div
-          class="swiper-slide"
-          v-for="ipfsData in $store.state.history.ipfsDataList"
-          :key="ipfsData.id"
-        >
-          <v-card class="card-container">
-            <!-- chart -->
-            <div class="chart">
-              <RadarChart
-                :chartData="[ipfsData.data.sharpness, ipfsData.data.volume, ipfsData.data.smell]"
-              ></RadarChart>
-            </div>
-
-            <!-- info -->
-            <v-card-title primary-title>
-              <div>
-                <div class="headline">No. {{ipfsData.data.id}}</div>
-                <span>Created at {{ipfsData.data.timestamp | unixtimeToDate('YYYY/MM/DD hh:mm')}}</span>
-                <div class="ipfs-hash">{{ipfsData.hash}}</div>
+        <template v-if="$store.state.history.ipfsDataList.length > 0">
+          <div
+            class="swiper-slide"
+            v-for="ipfsData in $store.state.history.ipfsDataList"
+            :key="ipfsData.id"
+          >
+            <v-card class="card-container">
+              <!-- chart -->
+              <div class="chart">
+                <RadarChart
+                  :chartData="[ipfsData.data.sharpness, ipfsData.data.volume, ipfsData.data.smell]"
+                ></RadarChart>
               </div>
-            </v-card-title>
+
+              <!-- info -->
+              <v-card-title primary-title>
+                <div>
+                  <div class="headline">No. {{ipfsData.data.id}}</div>
+                  <span>Created at {{ipfsData.data.timestamp | unixtimeToDate('YYYY/MM/DD hh:mm')}}</span>
+                  <div class="ipfs-hash">{{ipfsData.hash}}</div>
+                </div>
+              </v-card-title>
+            </v-card>
+          </div>
+        </template>
+        <template v-else>
+          <v-card class="no-data-container">
+            <div>
+              <h1>No Unco fond.</h1>
+              <p>Let's record the state of Unco today in a distributed network (IPFS) for free.</p>
+              <NewUncoDialog btnColor="white"></NewUncoDialog>
+            </div>
           </v-card>
-        </div>
+        </template>
       </div>
     </div>
 

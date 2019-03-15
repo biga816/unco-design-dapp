@@ -132,7 +132,8 @@ export default class History extends Vue {
       })
     }
 
-    if (currentIpfsData.parentHash) {
+    const ipfsDataList = this.$store.state.history.ipfsDataList
+    if (currentIpfsData.parentHash && !ipfsDataList.length) {
       this.$store.dispatch('history/fetchIpfsData', {
         hash: currentIpfsData.parentHash,
         index: 1

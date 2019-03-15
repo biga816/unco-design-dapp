@@ -33,7 +33,8 @@ export default class NewUncoDialog extends Vue {
     const currentIpfsData = this.$store.state.app.currentIpfsData
     let id = 0
     let parentHash = ''
-    if (currentIpfsData) {
+
+    if (currentIpfsData && currentIpfsData.data) {
       id = currentIpfsData.data.id + 1
       parentHash = currentIpfsData.hash
     }

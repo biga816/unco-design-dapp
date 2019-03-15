@@ -27,10 +27,6 @@
 
 .card-container {
   color: #000;
-  // height: 100%;
-  // width: 300px;
-  // height: 420px;
-  // background-color: #ffee33;
   background-color: #ffee33;
 
   &.akebono {
@@ -40,6 +36,15 @@
   &.Benikakesora {
     background-color: #8491c3;
   }
+}
+
+.no-data-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ccc;
+  text-align: center;
 }
 
 .chart {
