@@ -1,6 +1,8 @@
 # unco-design-dapp
 
-> My scrumtrulescent Nuxt.js project
+This project is for recording the Unco in a distributed network.  
+Unco, which mean the solid or semisolid remains of the food that could not be digested in the small intestine,are called feces (or poo) in english.  
+You can record the status of Unco in a distributed network (IPFS) for free, and you can also tokenize it as an NFT (ERC721).
 
 ## Build Setup
 
@@ -18,5 +20,3 @@ $ npm start
 # generate static project
 $ npm run generate
 ```
-
-For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
