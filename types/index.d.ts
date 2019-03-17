@@ -8,3 +8,8 @@ declare module '*.vue' {
   const _default: Vue
   export default _default
 }
+
+declare module '*.json' {
+  const data: any
+  export default data
+}

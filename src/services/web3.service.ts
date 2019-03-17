@@ -7,7 +7,22 @@ declare const window: any
 declare const ethereum: any
 
 export class Web3Service {
-  public ready = false
+  /**
+   *
+   *
+   * @static
+   * @returns {Web3Service}
+   * @memberof Web3Service
+   */
+  public static getInstance(): Web3Service {
+    if (!this.instance) {
+      this.instance = new Web3Service()
+    }
+    return this.instance
+  }
+
+  private static instance: Web3Service
+
   public accountsObservable = new Subject<string[]>()
   private web3: any
   private accounts: string[] = []
@@ -17,9 +32,11 @@ export class Web3Service {
    * @memberof Web3Service
    */
   constructor() {
-    window.addEventListener('load', () => {
-      this.bootstrapWeb3()
-    })
+    if (process.browser) {
+      window.addEventListener('load', () => {
+        this.bootstrapWeb3()
+      })
+    }
   }
 
   /**
@@ -93,11 +110,7 @@ export class Web3Service {
    */
   public async artifactsToContract(artifacts: any): Promise<any> {
     try {
-      if (!this.web3) {
-        const delay = new Promise(resolve => setTimeout(resolve, 100))
-        await delay
-        return await this.artifactsToContract(artifacts)
-      }
+      await this.checkWeb3()
 
       const contractAbstraction = contract(artifacts)
       contractAbstraction.setProvider(this.web3.currentProvider)
@@ -114,25 +127,24 @@ export class Web3Service {
    * @returns {Promise<any>}
    * @memberof Web3Service
    */
-  public watchTransactionReceipt(txHash: string): Promise<any> {
+  public async watchTransactionReceipt(txHash: string): Promise<any> {
+    await this.checkWeb3()
+
     return new Promise((resolve, reject) => {
       const subscription = interval(500)
         // .take(20)
         .subscribe(
-          () => {
-            this.web3.eth.getTransactionReceipt(
-              txHash,
-              (error: any, receipt: any) => {
-                if (error) {
-                  reject()
-                } else {
-                  if (receipt.blockNumber > 0) {
-                    subscription.unsubscribe()
-                    resolve(true)
-                  }
-                }
+          async () => {
+            try {
+              const receipt = await this.web3.eth.getTransactionReceipt(txHash)
+
+              if (!receipt || receipt.blockNumber > 0) {
+                subscription.unsubscribe()
+                resolve(true)
               }
-            )
+            } catch (error) {
+              reject(error)
+            }
           },
           error => reject(error),
           () => resolve(false)
@@ -146,13 +158,9 @@ export class Web3Service {
    * @private
    * @memberof Web3Service
    */
-  private refreshAccounts(): void {
-    this.web3.eth.getAccounts((error: any, accounts: any[]) => {
-      if (error != null) {
-        console.warn('There was an error fetching your accounts.')
-        return
-      }
-
+  private async refreshAccounts(): Promise<void> {
+    try {
+      const accounts = await this.web3.eth.getAccounts()
       // Get the initial account balance so it can be displayed.
       if (accounts.length === 0) {
         console.warn(
@@ -169,8 +177,17 @@ export class Web3Service {
         this.accountsObservable.next(accounts)
         this.accounts = accounts
       }
+    } catch (error) {
+      console.warn('There was an error fetching your accounts.')
+      throw new Error(error)
+    }
+  }
 
-      this.ready = true
-    })
+  private async checkWeb3(): Promise<void> {
+    if (!this.web3) {
+      const delay = new Promise(resolve => setTimeout(resolve, 100))
+      await delay
+      return await this.checkWeb3()
+    }
   }
 }

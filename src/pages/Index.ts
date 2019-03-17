@@ -44,11 +44,6 @@ export default class Index extends Vue {
         }
       })
     )
-
-    // wait animation
-    // setTimeout(() => {
-    //   this.animated = true
-    // }, 1000)
   }
 
   /**

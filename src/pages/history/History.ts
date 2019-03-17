@@ -3,6 +3,7 @@ import { Component, Vue } from 'vue-property-decorator'
 // components
 import RadarChart from '@/components/RadarChart/RadarChart.vue'
 import NewUncoDialog from '@/components/NewUncoDialog/NewUncoDialog.vue'
+import TokenizeDialog from '@/components/TokenizeDialog/TokenizeDialog.vue'
 
 // filters
 import { unixtimeToDate } from '../../filters'
@@ -16,10 +17,12 @@ import { IIpfsData } from '../../interfaces'
   },
   components: {
     RadarChart,
-    NewUncoDialog
+    NewUncoDialog,
+    TokenizeDialog
   }
 })
 export default class History extends Vue {
+  public accounts: string[] = []
   public swiperOption: any = {
     effect: 'coverflow',
     grabCursor: true,
@@ -33,7 +36,8 @@ export default class History extends Vue {
       slideShadows: true
     }
   }
-  public ipfsDataList: any = []
+  public activeIndex: number = 0
+  public ipfsDataList: IIpfsData[] = []
   public chartData: number[] = []
   public isLastSlide: boolean = false
 
@@ -45,19 +49,27 @@ export default class History extends Vue {
    * @memberof History
    */
   public mounted(): void {
+    // fetch ipfs data
     this.fetchIpfsData(this.$store.state.app.currentIpfsData)
+
+    // chech tx hash
+    const unconfirmedHash = this.$store.state.app.currentIpfsData
+    if (unconfirmedHash) {
+      this.chechTxHash(unconfirmedHash)
+    }
+
+    // fetch tokenId
+    this.ipfsDataList = this.$store.state.history.ipfsDataList
+    this.accounts = this.$store.state.app.accounts
+    if (this.ipfsDataList && this.ipfsDataList.length > 0) {
+      this.fetchTokenId(0, this.ipfsDataList[0].hash)
+    }
 
     // init swiper setting
     this.initSwiper()
 
-    // watch
-    this.unwatchs.push(
-      // watch store
-      this.$store.watch(
-        state => state.app.currentIpfsData,
-        currentIpfsData => this.fetchIpfsData(currentIpfsData)
-      )
-    )
+    // watch store
+    this.watchStore()
   }
 
   /**
@@ -92,6 +104,44 @@ export default class History extends Vue {
    * @private
    * @memberof History
    */
+  private watchStore(): void {
+    this.unwatchs.push(
+      // watch store
+      this.$store.watch(
+        state => state.app.currentIpfsData,
+        currentIpfsData => this.fetchIpfsData(currentIpfsData)
+      ),
+      this.$store.watch(
+        state => state.app.accounts,
+        accounts => (this.accounts = accounts)
+      ),
+      this.$store.watch(
+        state => state.app.txHash,
+        txHash => this.chechTxHash(txHash)
+      ),
+      this.$store.watch(
+        state => state.history.ipfsDataList,
+        (ipfsDataList: IIpfsData[]) => {
+          this.ipfsDataList = ipfsDataList
+
+          if (
+            ipfsDataList &&
+            ipfsDataList.length > 0 &&
+            ipfsDataList[0].hasToken === undefined
+          ) {
+            this.fetchTokenId(0, ipfsDataList[0].hash)
+          }
+        }
+      )
+    )
+  }
+
+  /**
+   *
+   *
+   * @private
+   * @memberof History
+   */
   private initSwiper(): void {
     // swiper setting
     const mySwiper: any = this.$refs.mySwiper
@@ -102,11 +152,28 @@ export default class History extends Vue {
         mySwiper.swiper.slides.length === mySwiper.swiper.activeIndex + 1
     })
 
+    mySwiper.swiper.on('slideChangeTransitionEnd', () => {
+      this.activeIndex = mySwiper.swiper.activeIndex
+      if (
+        this.ipfsDataList &&
+        this.ipfsDataList.length > 0 &&
+        this.ipfsDataList[this.activeIndex].hasToken === undefined
+      ) {
+        this.fetchTokenId(
+          this.activeIndex,
+          this.ipfsDataList[this.activeIndex].hash
+        )
+      }
+    })
+
     // set event when reach end
     mySwiper.swiper.on('reachEnd', () => {
       const targetIndex = mySwiper.swiper.slides.length
       const ipfsDataList = this.$store.state.history.ipfsDataList
-      const parentHash = ipfsDataList[targetIndex - 1].parentHash
+      const parentHash =
+        ipfsDataList && ipfsDataList.length > 0
+          ? ipfsDataList[targetIndex - 1].parentHash
+          : null
 
       if (parentHash && parentHash !== '') {
         this.$store.dispatch('history/fetchIpfsData', {
@@ -121,7 +188,7 @@ export default class History extends Vue {
    *
    *
    * @private
-   * @param {string} ipfsHash
+   * @param {IIpfsData} currentIpfsData
    * @memberof History
    */
   private fetchIpfsData(currentIpfsData: IIpfsData): void {
@@ -139,5 +206,31 @@ export default class History extends Vue {
         index: 1
       })
     }
+  }
+
+  /**
+   *
+   *
+   * @private
+   * @param {string} txHash
+   * @memberof History
+   */
+  private chechTxHash(txHash: string): void {
+    if (txHash) {
+      this.$store.dispatch('app/chechTxHash', { txHash })
+    }
+  }
+
+  /**
+   *
+   *
+   * @private
+   * @param {number} index
+   * @param {string} tokenUri
+   * @memberof History
+   */
+  private fetchTokenId(index: number, tokenUri: string) {
+    const params = { index, tokenUri, account: this.accounts[0] }
+    this.$store.dispatch('history/fetchTokenId', params)
   }
 }

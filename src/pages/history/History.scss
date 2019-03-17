@@ -1,3 +1,4 @@
+// swiper setting
 .swiper {
   position: absolute;
   width: 300px;
@@ -25,9 +26,16 @@
   }
 }
 
+// card
 .card-container {
   color: #000;
   background-color: #ffee33;
+  border: 8px solid #ffee33;
+  position: relative;
+
+  &.tokend {
+    border-color: #9f6b34;
+  }
 
   &.akebono {
     background-color: #f19072;
@@ -36,6 +44,35 @@
   &.Benikakesora {
     background-color: #8491c3;
   }
+
+  .token-id {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    color: #9f6b34;
+    font-weight: bold;
+  }
+
+  .stamp {
+    position: absolute;
+    width: 80px;
+    height: auto;
+    top: 8px;
+    right: 8px;
+    opacity: 0;
+    animation: stamp 500ms ease-out forwards 1s;
+  }
+
+  @keyframes stamp {
+    0% {
+      opacity: 0.5;
+      transform: scale(1.1) rotate(30deg);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) rotate(15deg);
+    }
+  }
 }
 
 .no-data-container {
@@ -43,7 +80,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #ccc;
   text-align: center;
 }
 
@@ -64,6 +100,20 @@
   overflow: hidden;
 }
 
+.new-nft-btn {
+  transition: all 200ms ease-in;
+  opacity: 1;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  &.hide {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+// buttons
 .slide-buttons {
   position: absolute;
   bottom: 16px;

@@ -27,6 +27,7 @@
       <!-- <v-btn icon @click.stop="rightDrawer = !rightDrawer">
         <v-icon>menu</v-icon>
       </v-btn>-->
+      <v-toolbar-title>{{accounts[0] || 'No wallet address'}}</v-toolbar-title>
     </v-toolbar>
     <v-content>
       <v-container fluid ma-0 pa-0>

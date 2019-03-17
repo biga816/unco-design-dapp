@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <!-- <swiper class="swiper" :options="swiperOption" ref="mySwiper"> -->
     <div class="swiper" v-swiper:mySwiper="swiperOption" ref="mySwiper">
       <div class="swiper-wrapper">
         <div class="swiper-slide">
@@ -37,8 +36,6 @@
           </div>
         </no-ssr>
       </div>
-
-      <!-- <div class="swiper-pagination"></div> -->
     </div>
 
     <div class="slide-buttons">
@@ -53,7 +50,10 @@
         v-bind:class="{reverse: activeIndex !== 0}"
         fab
       >
-        <v-icon>chevron_right</v-icon>
+        <template v-if="activeIndex === 0">?</template>
+        <template v-else>
+          <v-icon>close</v-icon>
+        </template>
       </v-btn>
     </div>
 

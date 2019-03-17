@@ -2,13 +2,24 @@
   <div>
     <div class="swiper" v-swiper:mySwiper="swiperOption" ref="mySwiper">
       <div class="swiper-wrapper">
-        <template v-if="$store.state.history.ipfsDataList.length > 0">
-          <div
-            class="swiper-slide"
-            v-for="ipfsData in $store.state.history.ipfsDataList"
-            :key="ipfsData.id"
-          >
-            <v-card class="card-container">
+        <template v-if="ipfsDataList.length > 0">
+          <div class="swiper-slide" v-for="(ipfsData, index) in ipfsDataList" :key="ipfsData.id">
+            <v-card class="card-container" :class="{tokend: ipfsData.hasToken}">
+              <!-- toekn id -->
+              <div
+                class="token-id"
+                v-if="ipfsData.tokenId !== null && ipfsData.tokenId >= 0"
+              >TOKEN ID: {{ipfsData.tokenId}}</div>
+              <!-- toekn stamp -->
+              <img class="stamp" src="../../assets/img/stamp@4x.png" v-if="ipfsData.hasToken">
+              <!-- button -->
+              <div
+                class="new-nft-btn"
+                :class="{hide: activeIndex !== index || ipfsData.hasToken}"
+                v-if="$store.state.app.accounts.length > 0"
+              >
+                <TokenizeDialog :hash="ipfsData.hash" :loading="$store.state.app.txHash !== ''"></TokenizeDialog>
+              </div>
               <!-- chart -->
               <div class="chart">
                 <RadarChart
@@ -28,7 +39,7 @@
           </div>
         </template>
         <template v-else>
-          <v-card class="no-data-container">
+          <v-card class="no-data-container" color="grey darken-1">
             <div>
               <h1>No Unco fond.</h1>
               <p>Let's record the state of Unco today in a distributed network (IPFS) for free.</p>

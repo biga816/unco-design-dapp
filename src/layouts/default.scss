@@ -2,6 +2,10 @@
   overflow: hidden;
 }
 
+.v-toolbar__title {
+  max-width: 50%;
+}
+
 .v-footer {
   z-index: 100;
 }
