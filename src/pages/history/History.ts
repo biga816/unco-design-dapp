@@ -132,7 +132,18 @@ export default class History extends Vue {
             this.fetchTokenId(0, ipfsDataList[0].hash)
           }
         }
-      )
+      ),
+      // watch actions
+      this.$store.subscribeAction({
+        after: (action, _) => {
+          if (action.type === 'app/chechTxHash') {
+            this.fetchTokenId(
+              this.activeIndex,
+              this.ipfsDataList[this.activeIndex].hash
+            )
+          }
+        }
+      })
     )
   }
 

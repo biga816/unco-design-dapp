@@ -18,6 +18,11 @@
         "configs/environment.dev.ts",
         "configs/environment.prod.ts"
       ]
-    },
-  }
+    }
+  },
+  "exclude": [
+    "functions",
+    "migrations",
+    "scripts"
+  ]
 }

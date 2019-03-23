@@ -1,26 +1,24 @@
 import * as express from 'express'
 import * as consola from 'consola'
 import { Nuxt, Builder } from 'nuxt'
-const app = express.default()
 
-// Import and Set Nuxt.js options
 import * as config from '../nuxt.config'
-const targetConfig = {
-  ...config,
-  dev: !(process.env.NODE_ENV === 'production')
-}
+import { routing } from './router'
 
+/**
+ * start
+ *
+ */
 async function start() {
+  const app = express.default()
+  const host = process.env.HOST || '127.0.0.1'
+  const port = Number(process.env.PORT) || 3000
+
   // Init Nuxt.js
   const nuxt = new Nuxt(config)
 
-  const {
-    host = process.env.HOST || '127.0.0.1',
-    port = process.env.PORT || 3000
-  } = nuxt.options.server
-
   // Build only in dev mode
-  if (targetConfig.dev) {
+  if (!(process.env.NODE_ENV === 'production')) {
     const builder = new Builder(nuxt)
     await builder.build()
   } else {
@@ -28,10 +26,12 @@ async function start() {
   }
 
   // Give nuxt middleware to express
+  routing(express.Router(), app)
   app.use(nuxt.render)
 
   // Listen the server
-  app.listen(port, host)
-  consola.success(`Server listening on http://${host}:${port}`)
+  app.listen(port, host, () => {
+    consola.success(`Server listening on http://${host}:${port}`)
+  })
 }
 start()

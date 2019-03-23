@@ -6,13 +6,16 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon",
-    "build": "tsc --module CommonJS && node ./scripts/copy-statics.js && nuxt build",
+    "build": "rimraf dist && tsc --module CommonJS && node ./scripts/copy-statics.js && nuxt build",
     "start": "cross-env NODE_ENV=production node dist/server/index.js",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint",
     "truffle": "truffle develop",
-    "test": "jest"
+    "test": "jest",
+    "firebase:build": "rimraf functions/ssr && mkdirp functions/ssr && cp -R .nuxt/dist functions/ssr/dist",
+    "firebase:serve": "firebase serve --only hosting,functions",
+    "firebase:deploy": "firebase deploy"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
@@ -46,10 +49,13 @@
     "@vue/test-utils": "^1.0.0-beta.27",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
+    "firebase-tools": "^6.5.0",
     "jest": "^23.6.0",
+    "mkdirp": "^0.5.1",
     "node-sass": "^4.11.0",
     "nodemon": "^1.18.9",
     "prettier": "1.14.3",
+    "rimraf": "^2.6.3",
     "sass-loader": "^7.1.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
