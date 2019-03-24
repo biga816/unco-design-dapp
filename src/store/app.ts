@@ -15,7 +15,6 @@ const web3Service = Web3Service.getInstance()
  * State
  */
 export interface IState {
-  counter: number
   accounts: string[]
   currentIpfsData: IIpfsData | {}
   txHash: string
@@ -25,7 +24,6 @@ export interface IState {
  * Initial State
  */
 export const state = (): IState => ({
-  counter: 0,
   accounts: [],
   currentIpfsData: {},
   txHash: ''
@@ -78,6 +76,26 @@ export const actions = {
   async chechTxHash({ commit }: any, { txHash }: any) {
     const isComfirmed = await web3Service.watchTransactionReceipt(txHash)
     commit('addTxHash', { txHash: isComfirmed ? '' : txHash })
+  },
+
+  /**
+   *
+   *
+   * @param {*} { commit }
+   * @param {*} { account }
+   */
+  async fetchCurrentIpfsData({ commit }: any, { account }: any) {
+    const uncoCore = await web3Service.artifactsToContract(uncoTokenArtifacts)
+
+    const balance = await uncoCore.balanceOf(account, { from: account })
+    if (parseFloat(balance) > 0) {
+      const tokenId = await uncoCore.tokenOfOwnerByIndex(account, balance - 1, {
+        from: account
+      })
+      const tokenUri = await uncoCore.tokenURI(tokenId, { from: account })
+      const ipfsData = await ipfsService.getIpfsData(tokenUri)
+      commit('addIpfsData', { ipfsData })
+    }
   }
 }
 

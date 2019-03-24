@@ -38,8 +38,13 @@ export default class Default extends Vue {
   public mounted(): void {
     this.web3Service.accountsObservable.subscribe(accounts => {
       this.accounts = accounts
-      // this.$store.commit('app/addAccounts', { accounts })
       this.$store.dispatch('app/fetchAccounts', { accounts })
+
+      if (accounts && accounts.length > 0) {
+        this.$store.dispatch('app/fetchCurrentIpfsData', {
+          account: accounts[0]
+        })
+      }
     })
   }
 }
