@@ -10,14 +10,21 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: pkg.name,
+    title: "Unco Design",
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: pkg.description }
+      { hid: 'description', name: 'description', content: pkg.description },
+      { hid: 'og:site_name', property: 'og:site_name', content: 'Unco Design' },
+      { hid: 'og:type', property: 'og:type', content: 'website' },
+      { hid: 'og:url', property: 'og:url', content: 'http://unco.design/' },
+      { hid: 'og:title', property: 'og:title', content: 'Unco Design' },
+      { hid: 'og:description', property: 'og:description', content: pkg.description },
+      { hid: 'og:image', property: 'og:image', content: 'http://unco.design/img/ogp.png' },
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'icon', type: 'image/x-icon', href: '/img/favicon.ico' },
+      { rel: 'apple-touch-icon', href: '/img/icon256x256.png' },
       {
         rel: 'stylesheet',
         href:
@@ -100,5 +107,21 @@ module.exports = {
         config.devtool = '#source-map'
       }
     }
-  }
+  },
+
+  /*
+  ** PWA
+  */
+  manifest: {
+    name: 'Unco Design',
+    lang: 'ja',
+    short_name: 'Unco Design',
+    title: 'Unco Design',
+    description: pkg.description,
+    theme_color: '#ffee33',
+    background_color: '#ffee33'
+  },
+  workbox: {
+    dev: true, //開発環境でもPWA
+  },
 }

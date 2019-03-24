@@ -1,8 +1,8 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 // components
-import PtsCanvas from '@/components/PtsCanvas/PtsCanvas.vue'
-import NewUncoDialog from '@/components/NewUncoDialog/NewUncoDialog.vue'
+import PtsCanvas from '@/components/PtsCanvas/index.vue'
+import NewUncoDialog from '@/components/NewUncoDialog/index.vue'
 
 @Component({
   // transition: 'bounce',
@@ -11,7 +11,7 @@ import NewUncoDialog from '@/components/NewUncoDialog/NewUncoDialog.vue'
     NewUncoDialog
   }
 })
-export default class Index extends Vue {
+export default class Root extends Vue {
   public swiperOption: any = { effect: 'flip' }
   public activeIndex: number = 0
   public ipfsHash: string = ''

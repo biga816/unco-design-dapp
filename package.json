@@ -1,7 +1,7 @@
 {
   "name": "unco-design-dapp",
   "version": "1.0.0",
-  "description": "My scrumtrulescent Nuxt.js project",
+  "description": "This project is for recording the Unco in a distributed network.",
   "author": "akihiro.tanaka",
   "private": true,
   "scripts": {

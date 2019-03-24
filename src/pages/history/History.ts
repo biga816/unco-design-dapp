@@ -1,9 +1,9 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 // components
-import RadarChart from '@/components/RadarChart/RadarChart.vue'
-import NewUncoDialog from '@/components/NewUncoDialog/NewUncoDialog.vue'
-import TokenizeDialog from '@/components/TokenizeDialog/TokenizeDialog.vue'
+import RadarChart from '@/components/RadarChart/index.vue'
+import NewUncoDialog from '@/components/NewUncoDialog/index.vue'
+import TokenizeDialog from '@/components/TokenizeDialog/index.vue'
 
 // filters
 import { unixtimeToDate } from '../../filters'
@@ -137,6 +137,9 @@ export default class History extends Vue {
       this.$store.subscribeAction({
         after: (action, _) => {
           if (action.type === 'app/chechTxHash') {
+            if (this.ipfsDataList.length === 0) {
+              return
+            }
             this.fetchTokenId(
               this.activeIndex,
               this.ipfsDataList[this.activeIndex].hash

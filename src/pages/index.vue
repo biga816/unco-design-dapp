@@ -58,11 +58,10 @@
     </div>
 
     <no-ssr>
-      <!-- <PtsCanvas v-if="animated" class="pts" type="line"/> -->
       <PtsCanvas class="pts" type="line"/>
     </no-ssr>
   </div>
 </template>
 
-<script lang="ts" src="./index.ts"></script>
-<style lang="scss" scoped src="./index.scss"></style>
+<script lang="ts" src="./Root.ts"></script>
+<style lang="scss" scoped src="./Root.scss"></style>
