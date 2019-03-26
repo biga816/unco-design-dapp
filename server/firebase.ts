@@ -14,7 +14,7 @@ export function init(): any {
   // Init Nuxt.js
   const nuxt = new Nuxt({
     dev: false,
-    buildDir: 'ssr'
+    buildDir: '.nuxt'
   })
 
   routing(express.Router(), app)

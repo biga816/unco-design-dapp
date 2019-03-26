@@ -9,13 +9,16 @@
     "build": "rimraf dist && tsc --module CommonJS && node ./scripts/copy-statics.js && nuxt build",
     "start": "cross-env NODE_ENV=production node dist/server/index.js",
     "generate": "nuxt generate",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "lint": "tslint --project ./ --config ./",
     "precommit": "npm run lint",
     "truffle": "truffle develop",
     "test": "jest",
-    "firebase:build": "rimraf functions/ssr && mkdirp functions/ssr && cp -R .nuxt/dist functions/ssr/dist",
+    "firebase:build": "npm run firebase:clear && npm run firebase:copy",
+    "firebase:install": "rimraf functions/node_modules && npm --prefix ./functions install ./functions",
     "firebase:serve": "firebase serve --only hosting,functions",
-    "firebase:deploy": "firebase deploy"
+    "firebase:deploy": "firebase deploy",
+    "firebase:clear": "rimraf functions/.nuxt && rimraf functions/server && mkdirp functions/.nuxt && mkdirp functions/server",
+    "firebase:copy": "cp -R .nuxt functions && cp -R dist/server functions && cp package.json functions && cp package-lock.json functions"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
@@ -26,6 +29,8 @@
     "cross-env": "^5.2.0",
     "date-fns": "^1.30.1",
     "express": "^4.16.4",
+    "firebase-admin": "^7.1.1",
+    "firebase-functions": "^2.2.1",
     "ipfs-api": "^26.1.2",
     "nuxt": "^2.4.0",
     "nuxt-ts": "^2.4.3",

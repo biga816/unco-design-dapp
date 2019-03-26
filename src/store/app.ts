@@ -89,10 +89,17 @@ export const actions = {
 
     const balance = await uncoCore.balanceOf(account, { from: account })
     if (parseFloat(balance) > 0) {
-      const tokenId = await uncoCore.tokenOfOwnerByIndex(account, balance - 1, {
+      const tokenId = await uncoCore.tokenOfOwnerByIndex(
+        account,
+        parseFloat(balance) - 1,
+        {
+          from: account
+        }
+      )
+      const tokenUri = await uncoCore.tokenURI(parseFloat(tokenId), {
         from: account
       })
-      const tokenUri = await uncoCore.tokenURI(tokenId, { from: account })
+
       const ipfsData = await ipfsService.getIpfsData(tokenUri)
       commit('addIpfsData', { ipfsData })
     }
