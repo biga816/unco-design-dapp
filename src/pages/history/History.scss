@@ -94,12 +94,13 @@
   padding: 32px 8px 0px;
 }
 
-.ipfs-hash,
-.eth-address {
-  white-space: nowrap;
+.address-data {
+  word-break: break-all;
   font-size: 10px;
   width: 100%;
+  height: 44px;
   overflow: hidden;
+  color: #666666;
 }
 
 .new-nft-btn {

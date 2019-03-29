@@ -33,11 +33,11 @@
                   <div class="headline">
                     <span>No. {{ipfsData.data.id}}</span>
                   </div>
-                  <div class="eth-address">
-                    {{ipfsData.data.timestamp | unixtimeToDate('YYYY.MM.DD HH:mm')}},
-                    {{ipfsData.data.creater ? ipfsData.data.creater : 'ANONYMOUS'}},
+                  <div class="address-data">
+                    Created on {{ipfsData.data.timestamp | unixtimeToDate('YYYY.MM.DD HH:mm')}},
+                    by {{ipfsData.data.creater ? ipfsData.data.creater : 'ANONYMOUS'}},
+                    from {{ipfsData.hash}}
                   </div>
-                  <div class="ipfs-hash">{{ipfsData.hash}}</div>
                 </div>
               </v-card-title>
             </v-card>
