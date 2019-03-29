@@ -30,8 +30,13 @@
               <!-- info -->
               <v-card-title primary-title>
                 <div>
-                  <div class="headline">No. {{ipfsData.data.id}}</div>
-                  <span>Created at {{ipfsData.data.timestamp | unixtimeToDate('YYYY/MM/DD hh:mm')}}</span>
+                  <div class="headline">
+                    <span>No. {{ipfsData.data.id}}</span>
+                  </div>
+                  <div class="eth-address">
+                    {{ipfsData.data.timestamp | unixtimeToDate('YYYY.MM.DD HH:mm')}},
+                    {{ipfsData.data.creater ? ipfsData.data.creater : 'ANONYMOUS'}},
+                  </div>
                   <div class="ipfs-hash">{{ipfsData.hash}}</div>
                 </div>
               </v-card-title>

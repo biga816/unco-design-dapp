@@ -32,6 +32,7 @@ export default class NewUncoDialog extends Vue {
     // set id & parentHash
     const networkId = this.$store.state.app.networkId
     const currentIpfsData = this.$store.state.app.currentIpfsData
+    const accounts = this.$store.state.app.accounts
 
     let id = 0
     let parentHash = ''
@@ -49,6 +50,7 @@ export default class NewUncoDialog extends Vue {
     const data = {
       id,
       timestamp: getTime(`${this.date} ${this.time}`) / 1000,
+      creater: accounts ? accounts[0] : '',
       volume: this.volume,
       sharpness: this.sharpness,
       smell: this.smell

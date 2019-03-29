@@ -94,7 +94,9 @@
   padding: 32px 8px 0px;
 }
 
-.ipfs-hash {
+.ipfs-hash,
+.eth-address {
+  white-space: nowrap;
   font-size: 10px;
   width: 100%;
   overflow: hidden;
