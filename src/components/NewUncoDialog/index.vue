@@ -34,8 +34,8 @@
                 </template>
                 <v-date-picker v-model="date" scrollable>
                   <v-spacer></v-spacer>
-                  <v-btn flat color="primary" @click="dateDialog = false">Cancel</v-btn>
-                  <v-btn flat color="primary" @click="$refs.dateDialog.save(date)">OK</v-btn>
+                  <v-btn flat color="grey darken-1" @click="dateDialog = false">Cancel</v-btn>
+                  <v-btn flat color="info" @click="$refs.dateDialog.save(date)">OK</v-btn>
                 </v-date-picker>
               </v-dialog>
             </v-flex>
@@ -62,8 +62,8 @@
                 </template>
                 <v-time-picker v-if="timeDialog" v-model="time" full-width>
                   <v-spacer></v-spacer>
-                  <v-btn flat color="primary" @click="timeDialog = false">Cancel</v-btn>
-                  <v-btn flat color="primary" @click="$refs.timeDialog.save(time)">OK</v-btn>
+                  <v-btn flat color="grey darken-1" @click="timeDialog = false">Cancel</v-btn>
+                  <v-btn flat color="info" @click="$refs.timeDialog.save(time)">OK</v-btn>
                 </v-time-picker>
               </v-dialog>
             </v-flex>
@@ -72,6 +72,7 @@
             <v-flex xs12>
               <v-slider
                 label="Volume"
+                color="info"
                 v-model="volume"
                 :tick-labels="volumeLabels"
                 :max="4"
@@ -86,6 +87,7 @@
             <v-flex xs12>
               <v-slider
                 label="Sharpness"
+                color="info"
                 v-model="sharpness"
                 :tick-labels="sharpnessLabels"
                 :max="4"
@@ -100,6 +102,7 @@
             <v-flex xs12>
               <v-slider
                 label="Smell"
+                color="info"
                 v-model="smell"
                 :tick-labels="smellLabels"
                 :max="4"
@@ -117,8 +120,8 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" flat @click="dialog = false">Close</v-btn>
-        <v-btn color="blue darken-1" flat @click="save()">Save</v-btn>
+        <v-btn color="grey darken-1" flat @click="dialog = false">Cancel</v-btn>
+        <v-btn color="info" flat @click="save()">Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

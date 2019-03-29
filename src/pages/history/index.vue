@@ -18,7 +18,7 @@
                 :class="{hide: activeIndex !== index || ipfsData.hasToken}"
                 v-if="$store.state.app.accounts.length > 0"
               >
-                <TokenizeDialog :hash="ipfsData.hash" :loading="$store.getters['app/txHash']"></TokenizeDialog>
+                <TokenizeDialog :hash="ipfsData.hash" :loading="!!$store.getters['app/txHash']"></TokenizeDialog>
               </div>
               <!-- chart -->
               <div class="chart">

@@ -19,6 +19,7 @@ export interface IState {
   networkId: number
   currentIpfsData: { [networkId: string]: IIpfsData }
   txHash: { [networkId: string]: string }
+  spinner: boolean
 }
 
 /**
@@ -28,7 +29,8 @@ export const state = (): IState => ({
   accounts: [],
   networkId: NaN,
   currentIpfsData: {},
-  txHash: {}
+  txHash: {},
+  spinner: false
 })
 
 /**
@@ -61,8 +63,10 @@ export const actions = {
    * @param {*} { commit }
    * @param {*} { files }
    */
-  async addFilesToIpfs({ commit }: any, { files }: any) {
+  async addFilesToIpfs({ commit, dispatch }: any, { files }: any) {
+    dispatch('showSpinner', { showSpinner: true })
     const ipfsData = await ipfsService.addFile(files)
+    dispatch('showSpinner', { showSpinner: false })
     commit('addIpfsData', { ipfsData })
   },
 
@@ -75,7 +79,7 @@ export const actions = {
   async mintUnco({ commit }: any, { hash, account }: any) {
     const uncoCore = await web3Service.artifactsToContract(uncoTokenArtifacts)
     const result = await uncoCore.mint(hash, { from: account })
-    const txHash = result ? result.receipt.transactionHash : null
+    const txHash = result ? result.receipt.transactionHash : ''
     commit('addTxHash', { txHash })
   },
 
@@ -115,6 +119,16 @@ export const actions = {
       const ipfsData = await ipfsService.getIpfsData(tokenUri)
       commit('addIpfsData', { ipfsData })
     }
+  },
+
+  /**
+   *
+   *
+   * @param {*} { commit }
+   * @param {*} { showSpinner }
+   */
+  async showSpinner({ commit }: any, { showSpinner }: any) {
+    commit('showSpinner', { showSpinner })
   }
 }
 
@@ -149,7 +163,9 @@ export const mutations = {
    * @param {*} { ipfsData }
    */
   addIpfsData(lstate: IState, { ipfsData }: any) {
-    lstate.currentIpfsData[lstate.networkId] = ipfsData
+    const newIpfsData = Object.assign({}, lstate.currentIpfsData)
+    newIpfsData[lstate.networkId] = ipfsData
+    lstate.currentIpfsData = newIpfsData
   },
 
   /**
@@ -159,7 +175,19 @@ export const mutations = {
    * @param {*} { txHash }
    */
   addTxHash(lstate: IState, { txHash }: any) {
-    lstate.txHash[lstate.networkId] = txHash
+    const newTxHash = Object.assign({}, lstate.txHash)
+    newTxHash[lstate.networkId] = txHash
+    lstate.txHash = newTxHash
+  },
+
+  /**
+   *
+   *
+   * @param {IState} lstate
+   * @param {*} { showSpinner }
+   */
+  showSpinner(lstate: IState, { showSpinner }: any) {
+    lstate.spinner = showSpinner
   }
 }
 

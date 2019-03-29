@@ -240,9 +240,10 @@ export default class History extends Vue {
    * @memberof History
    */
   private chechTxHash(): void {
-    const txHash = this.$store.getters['app/txHash']
-    if (txHash) {
-      this.$store.dispatch('app/chechTxHash', { txHash })
+    const networkId = this.$store.state.app.networkId
+    const txHash = this.$store.state.app.txHash
+    if (networkId >= 0 && txHash && txHash[networkId] !== '') {
+      this.$store.dispatch('app/chechTxHash', { txHash: txHash[networkId] })
     }
   }
 

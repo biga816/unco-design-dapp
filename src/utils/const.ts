@@ -1,10 +1,10 @@
 export const WEB3 = {
-  DEFAULT: 'https://mainnet.infura.io/1jyxaSVQd74TDQH6IHbe',
+  DEFAULT: 'https://mainnet.infura.io/v3/e057d93273374902ae044401f8099775',
   INFURA: {
-    1: 'https://mainnet.infura.io/1jyxaSVQd74TDQH6IHbe',
-    3: 'https://ropsten.infura.io/1jyxaSVQd74TDQH6IHbe',
-    4: 'https://rinkeby.infura.io/1jyxaSVQd74TDQH6IHbe',
-    42: 'https://kovan.infura.io/1jyxaSVQd74TDQH6IHbe'
+    1: 'https://mainnet.infura.io/v3/e057d93273374902ae044401f8099775',
+    3: 'https://ropsten.infura.io/v3/e057d93273374902ae044401f8099775',
+    4: 'https://rinkeby.infura.io/v3/e057d93273374902ae044401f8099775',
+    42: 'https://kovan.infura.io/v3/e057d93273374902ae044401f8099775'
   }
 }
 
