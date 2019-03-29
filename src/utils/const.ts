@@ -12,9 +12,9 @@ export const IPFS = {
   PROTOCOL: process.env.NUXT_ENV_ENDPOINT_IPFS_PROTOCOL,
   HOST: process.env.NUXT_ENV_ENDPOINT_IPFS_HOST,
   PORT: {
-    API: process.env.NUXT_ENV_ENDPOINT_IPFS_API_PORT,
-    GATEWAY: process.env.NUXT_ENV_ENDPOINT_IPFS_GATEWAY_PORT
+    API: process.env.NUXT_ENV_ENDPOINT_IPFS_API_PORT
   },
+  GATEWAY: process.env.NUXT_ENV_ENDPOINT_IPFS_GATEWAY,
   API: {
     OBJECT: {
       GET: 'object/get'

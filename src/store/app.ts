@@ -16,8 +16,9 @@ const web3Service = Web3Service.getInstance()
  */
 export interface IState {
   accounts: string[]
-  currentIpfsData: IIpfsData | {}
-  txHash: string
+  networkId: number
+  currentIpfsData: { [networkId: string]: IIpfsData }
+  txHash: { [networkId: string]: string }
 }
 
 /**
@@ -25,8 +26,9 @@ export interface IState {
  */
 export const state = (): IState => ({
   accounts: [],
+  networkId: NaN,
   currentIpfsData: {},
-  txHash: ''
+  txHash: {}
 })
 
 /**
@@ -41,6 +43,16 @@ export const actions = {
    */
   async fetchAccounts({ commit }: any, { accounts }: any) {
     commit('addAccounts', { accounts })
+  },
+
+  /**
+   *
+   *
+   * @param {*} { commit }
+   * @param {*} { networkId }
+   */
+  async fetchNetworkId({ commit }: any, { networkId }: any) {
+    commit('addNetworkId', { networkId })
   },
 
   /**
@@ -124,10 +136,20 @@ export const mutations = {
    *
    *
    * @param {IState} lstate
+   * @param {*} { networkId }
+   */
+  addNetworkId(lstate: IState, { networkId }: any) {
+    lstate.networkId = networkId
+  },
+
+  /**
+   *
+   *
+   * @param {IState} lstate
    * @param {*} { ipfsData }
    */
   addIpfsData(lstate: IState, { ipfsData }: any) {
-    lstate.currentIpfsData = ipfsData
+    lstate.currentIpfsData[lstate.networkId] = ipfsData
   },
 
   /**
@@ -137,6 +159,21 @@ export const mutations = {
    * @param {*} { txHash }
    */
   addTxHash(lstate: IState, { txHash }: any) {
-    lstate.txHash = txHash
+    lstate.txHash[lstate.networkId] = txHash
+  }
+}
+
+/**
+ * Getters
+ */
+export const getters = {
+  /**
+   *
+   *
+   * @param {IState} lstate
+   * @returns
+   */
+  txHash(lstate: IState) {
+    return lstate.txHash[lstate.networkId]
   }
 }

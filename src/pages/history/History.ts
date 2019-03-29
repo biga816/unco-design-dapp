@@ -50,20 +50,13 @@ export default class History extends Vue {
    */
   public mounted(): void {
     // fetch ipfs data
-    this.fetchIpfsData(this.$store.state.app.currentIpfsData)
-
+    const networkId = this.$store.state.app.networkId
+    const currentIpfsData = this.$store.state.app.currentIpfsData
+    if (networkId >= 0 && currentIpfsData) {
+      this.fetchIpfsData(currentIpfsData[networkId])
+    }
     // chech tx hash
-    const unconfirmedHash = this.$store.state.app.currentIpfsData
-    if (unconfirmedHash) {
-      this.chechTxHash(unconfirmedHash)
-    }
-
-    // fetch tokenId
-    this.ipfsDataList = this.$store.state.history.ipfsDataList
-    this.accounts = this.$store.state.app.accounts
-    if (this.ipfsDataList && this.ipfsDataList.length > 0) {
-      this.fetchTokenId(0, this.ipfsDataList[0].hash)
-    }
+    this.chechTxHash()
 
     // init swiper setting
     this.initSwiper()
@@ -106,19 +99,15 @@ export default class History extends Vue {
    */
   private watchStore(): void {
     this.unwatchs.push(
-      // watch store
-      this.$store.watch(
-        state => state.app.currentIpfsData,
-        currentIpfsData => this.fetchIpfsData(currentIpfsData)
-      ),
+      // this.$store.watch(
+      //   state => state.app.currentIpfsData,
+      //   _ => this.fetchIpfsData()
+      // ),
       this.$store.watch(
         state => state.app.accounts,
         accounts => (this.accounts = accounts)
       ),
-      this.$store.watch(
-        state => state.app.txHash,
-        txHash => this.chechTxHash(txHash)
-      ),
+      this.$store.watch(state => state.app.txHash, _ => this.chechTxHash()),
       this.$store.watch(
         state => state.history.ipfsDataList,
         (ipfsDataList: IIpfsData[]) => {
@@ -135,7 +124,7 @@ export default class History extends Vue {
       ),
       // watch actions
       this.$store.subscribeAction({
-        after: (action, _) => {
+        after: (action, state) => {
           if (action.type === 'app/chechTxHash') {
             if (this.ipfsDataList.length === 0) {
               return
@@ -144,6 +133,14 @@ export default class History extends Vue {
               this.activeIndex,
               this.ipfsDataList[this.activeIndex].hash
             )
+          } else if (
+            action.type === 'app/addFilesToIpfs' ||
+            action.type === 'app/fetchAccounts'
+          ) {
+            const currentIpfsData =
+              state.app.currentIpfsData[state.app.networkId]
+
+            this.fetchIpfsData(currentIpfsData)
           }
         }
       })
@@ -202,23 +199,36 @@ export default class History extends Vue {
    *
    *
    * @private
-   * @param {IIpfsData} currentIpfsData
    * @memberof History
    */
-  private fetchIpfsData(currentIpfsData: IIpfsData): void {
-    if (currentIpfsData.hash) {
-      this.$store.dispatch('history/fetchIpfsData', {
-        hash: currentIpfsData.hash,
-        index: 0
-      })
-    }
+  private fetchIpfsData(fetchIpfsData: IIpfsData): void {
+    if (this.$store.state.app.networkId >= 0) {
+      const mySwiper: any = this.$refs.mySwiper
+      mySwiper.swiper.slideTo(0)
 
-    const ipfsDataList = this.$store.state.history.ipfsDataList
-    if (currentIpfsData.parentHash && !ipfsDataList.length) {
-      this.$store.dispatch('history/fetchIpfsData', {
-        hash: currentIpfsData.parentHash,
-        index: 1
-      })
+      // fetch tokenId
+      this.ipfsDataList = this.$store.state.history.ipfsDataList
+      this.accounts = this.$store.state.app.accounts
+      if (this.ipfsDataList && this.ipfsDataList.length > 0) {
+        this.fetchTokenId(0, this.ipfsDataList[0].hash)
+      }
+
+      // fetch IpfsData
+      // this.$store.commit('history/clearIpfsDataList')
+      if (fetchIpfsData && fetchIpfsData.hash) {
+        this.$store.dispatch('history/fetchIpfsData', {
+          hash: fetchIpfsData.hash,
+          index: 0
+        })
+      }
+
+      const ipfsDataList = this.$store.state.history.ipfsDataList
+      if (fetchIpfsData && fetchIpfsData.parentHash && !ipfsDataList.length) {
+        this.$store.dispatch('history/fetchIpfsData', {
+          hash: fetchIpfsData.parentHash,
+          index: 1
+        })
+      }
     }
   }
 
@@ -229,7 +239,8 @@ export default class History extends Vue {
    * @param {string} txHash
    * @memberof History
    */
-  private chechTxHash(txHash: string): void {
+  private chechTxHash(): void {
+    const txHash = this.$store.getters['app/txHash']
     if (txHash) {
       this.$store.dispatch('app/chechTxHash', { txHash })
     }

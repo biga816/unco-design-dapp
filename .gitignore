@@ -85,6 +85,7 @@ sw.*
 
 # smart contract
 build
+mnemonic.json
 
 # firebase
 .firebase

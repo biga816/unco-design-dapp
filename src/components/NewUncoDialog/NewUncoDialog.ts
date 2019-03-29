@@ -30,13 +30,19 @@ export default class NewUncoDialog extends Vue {
    */
   public save(): void {
     // set id & parentHash
+    const networkId = this.$store.state.app.networkId
     const currentIpfsData = this.$store.state.app.currentIpfsData
+
     let id = 0
     let parentHash = ''
 
-    if (currentIpfsData && currentIpfsData.data) {
-      id = currentIpfsData.data.id + 1
-      parentHash = currentIpfsData.hash
+    if (
+      networkId >= 0 &&
+      currentIpfsData[networkId] &&
+      currentIpfsData[networkId].data
+    ) {
+      id = currentIpfsData[networkId].data.id + 1
+      parentHash = currentIpfsData[networkId].hash
     }
 
     // set data

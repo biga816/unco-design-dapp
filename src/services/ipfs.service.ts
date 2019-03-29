@@ -90,8 +90,7 @@ export class IpfsService {
    */
   public async getIpfsData(hash: string): Promise<IIpfsData> {
     try {
-      const domain = `${IPFS.PROTOCOL}://${IPFS.HOST}:${IPFS.PORT.GATEWAY}`
-      const url = `${domain}/ipfs/${hash}`
+      const url = IPFS.GATEWAY + hash
       const results = await forkJoin([
         axios.get(url + '/data'),
         axios.get(url + '/parentHash')

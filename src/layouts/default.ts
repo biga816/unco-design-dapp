@@ -16,8 +16,8 @@ export default class Default extends Vue {
       to: 'https://github.com/biga816/unco-design-dapp'
     }
   ]
-
   public accounts: string[] = []
+  public networkId: number = NaN
 
   private web3Service: Web3Service
 
@@ -36,8 +36,10 @@ export default class Default extends Vue {
    * @memberof Default
    */
   public mounted(): void {
-    this.web3Service.accountsObservable.subscribe(accounts => {
+    this.web3Service.accountsObservable.subscribe(async accounts => {
       this.accounts = accounts
+      this.networkId = await this.web3Service.getNetworkId()
+      this.$store.dispatch('app/fetchNetworkId', { networkId: this.networkId })
       this.$store.dispatch('app/fetchAccounts', { accounts })
 
       if (accounts && accounts.length > 0) {
@@ -46,5 +48,27 @@ export default class Default extends Vue {
         })
       }
     })
+  }
+
+  /**
+   *
+   *
+   * @readonly
+   * @type {string}
+   * @memberof Default
+   */
+  public get networkName(): string {
+    switch (this.networkId) {
+      case 1:
+        return ''
+      case 3:
+        return 'on ropsten'
+      case 4:
+        return 'on rinkeby'
+      case 42:
+        return 'on kovan'
+      default:
+        return 'on'
+    }
   }
 }

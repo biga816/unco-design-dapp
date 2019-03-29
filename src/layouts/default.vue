@@ -30,6 +30,7 @@
       <v-toolbar-title>{{accounts[0] || 'No wallet address'}}</v-toolbar-title>
     </v-toolbar>
     <v-content>
+      <div class="network-info" :class="networkName">TEST NETWORK</div>
       <v-container fluid ma-0 pa-0>
         <nuxt/>
       </v-container>
