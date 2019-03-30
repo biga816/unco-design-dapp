@@ -38,3 +38,12 @@
     background-color: #e3b455;
   }
 }
+
+.menu-title {
+  &:hover {
+    background: green;
+  }
+  &:active {
+    background: yellow;
+  }
+}

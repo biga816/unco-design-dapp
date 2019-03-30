@@ -68,7 +68,7 @@ export default class PtsCanvas extends Vue {
     space.add({
       animate: () => {
         // shorten the line when it's not stretching
-        if (chain.length > (stretch ? 100 : 10)) {
+        if (chain && chain.length > (stretch ? 100 : 10)) {
           chain.shift()
         }
 

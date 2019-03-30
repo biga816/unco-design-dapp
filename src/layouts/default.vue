@@ -4,7 +4,14 @@
     <v-navigation-drawer v-model="drawer" :clipped="true" fixed app>
       <v-list subheader>
         <v-subheader>Pages</v-subheader>
-        <v-list-tile v-for="(item, i) in items" :key="i" :to="item.to" router exact>
+        <v-list-tile
+          v-for="(item, i) in items"
+          :key="i"
+          :to="item.to"
+          router
+          exact
+          active-class="info--text"
+        >
           <v-list-tile-content>
             <v-list-tile-title v-text="item.title"/>
           </v-list-tile-content>

@@ -77,6 +77,10 @@
 
 .authers {
   pointer-events: all;
+  a {
+    text-decoration: none;
+    color: #666666;
+  }
 }
 
 /* about slide */

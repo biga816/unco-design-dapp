@@ -1,0 +1,56 @@
+.page-title {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  text-align: center;
+  z-index: 100;
+  color: #000;
+  pointer-events: none;
+}
+
+.swiper {
+  height: 100%;
+  text-align: center;
+  position: absolute;
+  z-index: 1;
+  overflow: visible;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: 992px;
+  pointer-events: none;
+
+  .slide-container {
+    width: 100%;
+    padding: 16px;
+    pointer-events: initial;
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    pointer-events: initial;
+  }
+
+  .suzuri-image {
+    width: 100%;
+    height: auto;
+    max-width: 320px;
+  }
+
+  .price {
+    color: #000000;
+  }
+}
+
+.pts {
+  z-index: 0;
+  position: fixed;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #fe3;
+}

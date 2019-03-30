@@ -9,7 +9,8 @@ export default class Default extends Vue {
   public drawer: boolean = false
   public items: object[] = [
     { title: 'Home', to: '/' },
-    { title: 'History', to: '/history' }
+    { title: 'History', to: '/history' },
+    { title: 'Goods', to: '/goods' }
   ]
   public links: object[] = [
     {
