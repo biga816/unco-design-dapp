@@ -20,6 +20,7 @@ export interface IState {
   currentIpfsData: { [networkId: string]: IIpfsData }
   txHash: { [networkId: string]: string }
   spinner: boolean
+  snackbar: string
 }
 
 /**
@@ -30,7 +31,8 @@ export const state = (): IState => ({
   networkId: NaN,
   currentIpfsData: {},
   txHash: {},
-  spinner: false
+  spinner: false,
+  snackbar: ''
 })
 
 /**
@@ -67,6 +69,7 @@ export const actions = {
     dispatch('showSpinner', { showSpinner: true })
     const ipfsData = await ipfsService.addFile(files)
     dispatch('showSpinner', { showSpinner: false })
+    dispatch('showSnackbar', { msg: 'Uploaded successfully.' })
     commit('addIpfsData', { ipfsData })
   },
 
@@ -89,8 +92,11 @@ export const actions = {
    * @param {*} { commit }
    * @param {*} { txHash }
    */
-  async chechTxHash({ commit }: any, { txHash }: any) {
+  async chechTxHash({ commit, dispatch }: any, { txHash }: any) {
     const isComfirmed = await web3Service.watchTransactionReceipt(txHash)
+    if (isComfirmed) {
+      dispatch('showSnackbar', { msg: 'Confirmed successfully.' })
+    }
     commit('addTxHash', { txHash: isComfirmed ? '' : txHash })
   },
 
@@ -129,6 +135,16 @@ export const actions = {
    */
   async showSpinner({ commit }: any, { showSpinner }: any) {
     commit('showSpinner', { showSpinner })
+  },
+
+  /**
+   *
+   *
+   * @param {*} { commit }
+   * @param {*} { msg }
+   */
+  async showSnackbar({ commit }: any, { msg }: any) {
+    commit('showSnackbar', { msg })
   }
 }
 
@@ -188,6 +204,16 @@ export const mutations = {
    */
   showSpinner(lstate: IState, { showSpinner }: any) {
     lstate.spinner = showSpinner
+  },
+
+  /**
+   *
+   *
+   * @param {IState} lstate
+   * @param {*} { msg }
+   */
+  showSnackbar(lstate: IState, { msg }: any) {
+    lstate.snackbar = msg
   }
 }
 

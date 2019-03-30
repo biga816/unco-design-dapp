@@ -56,6 +56,15 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+
+    <!-- snackbar -->
+    <v-snackbar
+      v-model="snackbar"
+      :top="true"
+      :right="true"
+      :timeout="3000"
+      color="info"
+    >{{ message }}</v-snackbar>
   </v-app>
 </template>
 
