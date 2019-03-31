@@ -1,7 +1,5 @@
 <template>
   <div>
-    <h1 class="page-title">Unco Goods</h1>
-
     <div class="swiper" v-swiper:mySwiper="swiperOption" ref="mySwiper">
       <!-- item slide -->
       <div class="swiper-wrapper">
