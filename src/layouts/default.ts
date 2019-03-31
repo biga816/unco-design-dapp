@@ -23,6 +23,7 @@ export default class Default extends Vue {
   public spinner: boolean = false
   public snackbar: boolean = false
   public message: string = ''
+  public caution: string = ''
 
   private web3Service: Web3Service
 
@@ -32,7 +33,8 @@ export default class Default extends Vue {
    */
   constructor() {
     super()
-    this.web3Service = new Web3Service()
+    // this.web3Service = new Web3Service()
+    this.web3Service = Web3Service.getInstance()
   }
 
   /**
@@ -63,7 +65,11 @@ export default class Default extends Vue {
     this.$store.subscribeAction({
       after: (action: ActionPayload, state: any) => {
         if (action.type === 'app/showSpinner') {
-          this.spinner = state.app.spinner
+          this.caution = state.app.spinner
+          this.spinner = true
+        } else if (action.type === 'app/hideSpinner') {
+          this.caution = ''
+          this.spinner = false
         } else if (action.type === 'app/showSnackbar') {
           this.message = state.app.snackbar
           this.snackbar = true

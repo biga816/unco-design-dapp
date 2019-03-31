@@ -91,5 +91,4 @@ mnemonic.json
 .firebase
 functions/*
 !functions/index.js
-!functions/public
 !functions/etc

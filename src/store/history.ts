@@ -37,8 +37,10 @@ export const actions = {
    * @param {*} { commit }
    * @param {*} { hash, index }
    */
-  async fetchIpfsData({ commit }: any, { hash, index }: any) {
+  async fetchIpfsData({ commit, dispatch }: any, { hash, index }: any) {
+    dispatch('app/showSpinner', { msg: 'Now loading...' }, { root: true })
     const ipfsData = await ipfsService.getIpfsData(hash)
+    dispatch('app/hideSpinner', {}, { root: true })
     commit('addIpfsData', { ipfsData, index })
   },
 

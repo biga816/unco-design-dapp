@@ -163,10 +163,11 @@ export class Web3Service {
       const accounts = await this.web3.eth.getAccounts()
       // Get the initial account balance so it can be displayed.
       if (accounts.length === 0) {
+        this.accountsObservable.next(accounts)
+        this.accounts = accounts
         console.warn(
           'Could not get any accounts! Make sure your Ethereum client is configured correctly.'
         )
-        return
       }
 
       if (

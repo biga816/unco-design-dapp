@@ -19,7 +19,7 @@ export interface IState {
   networkId: number
   currentIpfsData: { [networkId: string]: IIpfsData }
   txHash: { [networkId: string]: string }
-  spinner: boolean
+  spinner: string
   snackbar: string
 }
 
@@ -31,7 +31,7 @@ export const state = (): IState => ({
   networkId: NaN,
   currentIpfsData: {},
   txHash: {},
-  spinner: false,
+  spinner: '',
   snackbar: ''
 })
 
@@ -66,9 +66,9 @@ export const actions = {
    * @param {*} { files }
    */
   async addFilesToIpfs({ commit, dispatch }: any, { files }: any) {
-    dispatch('showSpinner', { showSpinner: true })
+    dispatch('showSpinner', { msg: 'Now recording...' })
     const ipfsData = await ipfsService.addFile(files)
-    dispatch('showSpinner', { showSpinner: false })
+    dispatch('hideSpinner')
     dispatch('showSnackbar', { msg: 'Uploaded successfully.' })
     commit('addIpfsData', { ipfsData })
   },
@@ -133,8 +133,17 @@ export const actions = {
    * @param {*} { commit }
    * @param {*} { showSpinner }
    */
-  async showSpinner({ commit }: any, { showSpinner }: any) {
-    commit('showSpinner', { showSpinner })
+  async showSpinner({ commit }: any, { msg }: any) {
+    commit('showSpinner', { msg })
+  },
+
+  /**
+   *
+   *
+   * @param {*} { commit }
+   */
+  async hideSpinner({ commit }: any) {
+    commit('hideSpinner')
   },
 
   /**
@@ -202,8 +211,17 @@ export const mutations = {
    * @param {IState} lstate
    * @param {*} { showSpinner }
    */
-  showSpinner(lstate: IState, { showSpinner }: any) {
-    lstate.spinner = showSpinner
+  showSpinner(lstate: IState, { msg }: any) {
+    lstate.spinner = msg
+  },
+
+  /**
+   *
+   *
+   * @param {IState} lstate
+   */
+  hideSpinner(lstate: IState) {
+    lstate.spinner = ''
   },
 
   /**

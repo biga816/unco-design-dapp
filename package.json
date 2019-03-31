@@ -17,8 +17,8 @@
     "firebase:install": "rimraf functions/node_modules && npm --prefix ./functions install ./functions",
     "firebase:serve": "firebase serve --only hosting,functions",
     "firebase:deploy": "firebase deploy",
-    "firebase:clear": "rimraf functions/.nuxt && rimraf functions/server && mkdirp functions/.nuxt && mkdirp functions/server",
-    "firebase:copy": "cp -R .nuxt functions && cp -R dist/server functions && cp package.json functions && cp package-lock.json functions"
+    "firebase:clear": "rimraf functions/.nuxt && rimraf functions/server && rimraf functions/public && mkdirp functions/.nuxt && mkdirp functions/server",
+    "firebase:copy": "cp -R .nuxt functions && cp -R dist/server functions && cp package.json functions && cp package-lock.json functions && cp -R src/static functions/public"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",

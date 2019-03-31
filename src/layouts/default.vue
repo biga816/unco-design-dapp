@@ -58,7 +58,7 @@
     <v-dialog v-model="spinner" persistent width="240">
       <v-card color="info" dark>
         <v-card-text>
-          Now recording...
+          {{ caution }}
           <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
         </v-card-text>
       </v-card>
