@@ -9,14 +9,13 @@ import { routing } from './router'
  * @returns {*}
  */
 export function init(): any {
-  const app = express.default()
-
   // Init Nuxt.js
   const nuxt = new Nuxt({
     dev: false,
     buildDir: '.nuxt'
   })
 
+  const app = express.default()
   routing(express.Router(), app)
   app.use(nuxt.render)
 

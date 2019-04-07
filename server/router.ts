@@ -1,3 +1,5 @@
+import { TokenController } from './controllers/token-controller'
+
 /**
  *
  *
@@ -7,10 +9,14 @@
  * @returns {*}
  */
 export function routing(router: any, app: any): any {
-  // route setting
-  app.use('/', router)
+  const tokenController = new TokenController()
 
   router.get('/ready', (_: any, res: any) => {
     res.send('All right!! The app is ready:)')
   })
+
+  router.get('/token/:id', tokenController.getToken)
+
+  // route setting
+  app.use('/api', router)
 }

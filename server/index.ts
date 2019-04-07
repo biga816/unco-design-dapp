@@ -1,8 +1,13 @@
 import * as express from 'express'
 import * as consola from 'consola'
 import { Nuxt, Builder } from 'nuxt'
+import * as bodyParser from 'body-parser'
+import cors from 'cors'
 
-import * as config from '../nuxt.config'
+import { config } from 'dotenv'
+config()
+
+import * as nuxtConfig from '../nuxt.config'
 import { routing } from './router'
 
 /**
@@ -15,7 +20,7 @@ async function start() {
   const port = Number(process.env.PORT) || 3000
 
   // Init Nuxt.js
-  const nuxt = new Nuxt(config)
+  const nuxt = new Nuxt(nuxtConfig)
 
   // Build only in dev mode
   if (!(process.env.NODE_ENV === 'production')) {
@@ -24,6 +29,15 @@ async function start() {
   } else {
     await nuxt.ready()
   }
+
+  // api setting
+  app.use(cors())
+  app.use(
+    bodyParser.urlencoded({
+      extended: true
+    })
+  )
+  app.use(bodyParser.json())
 
   // Give nuxt middleware to express
   routing(express.Router(), app)
