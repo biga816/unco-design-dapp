@@ -1,13 +1,6 @@
 {
-  "functions": {
-    "predeploy": [
-      "npm run firebase:build",
-      "npm run firebase:install"
-    ],
-    "source": "functions"
-  },
   "hosting": {
-    "public": "functions/public",
+    "public": "out",
     "rewrites": [
       {
         "source": "**",

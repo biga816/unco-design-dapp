@@ -1,28 +1,20 @@
 {
-  "extends": "@nuxt/typescript",
   "compilerOptions": {
-    "types": [
-      "@types/node",
-      "@nuxt/vue-app",
-      "./types"
-    ],
-    "experimentalDecorators": true,
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
-    "outDir": "./dist",
-    "noEmit": false,
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "config": [
-        "configs/environment.dev.ts",
-        "configs/environment.prod.ts"
-      ]
-    }
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true
   },
-  "exclude": [
-    "functions",
-    "migrations",
-    "scripts"
-  ]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
 }
