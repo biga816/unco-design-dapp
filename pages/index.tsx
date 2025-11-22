@@ -3,6 +3,7 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Description from "./Description";
 import PtsCanvas from "./PtsCanvas";
+import Purchase from "./Purchase";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +19,7 @@ export default function Home() {
       <main className={styles.main}>
         <Description />
         <PtsCanvas />
+        <Purchase />
       </main>
     </>
   );
